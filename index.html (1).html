@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escreva a frase certa</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f7c6d2; /* Cor de fundo rosa claro */
+        }
+
+        .container {
+            text-align: center;
+            background-color: white; /* Fundo branco para destaque */
+            padding: 50px; /* Aumentando o padding */
+            border-radius: 20px; /* Bordas mais arredondadas */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            max-width: 600px; /* Aumentando a largura máxima do container */
+        }
+
+        h2 {
+            font-family: 'Courier New', Courier, monospace;
+            color: #e91e63; /* Cor rosa para o título */
+            margin: 0; /* Remove a margem padrão do h2 */
+            font-size: 36px; /* Aumentando o tamanho da fonte */
+        }
+
+        input {
+            font-family: 'Verdana', sans-serif;
+            padding: 20px; /* Aumentando o padding do input */
+            width: 90%; /* Ajusta a largura do campo de entrada */
+            margin: 20px auto; /* Centraliza o campo de entrada */
+            border-radius: 10px; /* Borda mais arredondada */
+            border: 3px solid #e91e63; /* Borda rosa mais grossa no campo de texto */
+            outline: none; /* Remove a borda padrão ao focar */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Aumentando a sombra */
+            font-size: 20px; /* Aumentando o tamanho da fonte do input */
+            display: block; /* Garante que o campo de entrada se comporte como um bloco */
+        }
+
+        input:focus {
+            border-color: #ad1457; /* Cor mais escura ao focar */
+        }
+
+        button {
+            font-family: 'Verdana', sans-serif;
+            background-color: #e91e63; /* Botão rosa */
+            color: white;
+            padding: 20px 30px; /* Aumentando o padding do botão */
+            margin-top: 20px;
+            border: none;
+            border-radius: 10px; /* Borda mais arredondada */
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%; /* Aumentando a largura do botão */
+            font-size: 24px; /* Aumentando o tamanho da fonte do botão */
+        }
+
+        button:hover {
+            background-color: #d81b60; /* Botão mais escuro ao passar o mouse */
+        }
+
+        p {
+            font-family: 'Verdana', sans-serif;
+            margin-top: 25px;
+            font-size: 24px; /* Aumentando o tamanho da fonte do texto de feedback */
+            color: #333; /* Cor do texto de feedback */
+        }
+
+        #qrCode {
+            display: none; /* Oculta o QR code inicialmente */
+            margin-top: 20px;
+            width: 400px; /* Aumentando o tamanho do QR code */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Adicionando a música de fundo -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://archive.org/download/youtube-Dy_eP-mqWow/Dy_eP-mqWow.mp4" type="audio/mp4">
+        Seu navegador não suporta o elemento audio.
+    </audio>
+
+    <div class="container">
+        <h2>Qual é a frase?</h2>
+        <input type="text" id="resposta" placeholder="Digite aqui" onfocus="fadeInMusic()">
+        <br>
+        <button onclick="verificar()">Verificar</button>
+        <p id="resultado"></p>
+        <img id="qrCode" src="https://www.dropbox.com/scl/fi/pw4wgtodka1xlhb9vlk3y/Black-and-Pink-Minimalist-Modern-Trendy-Love-Album-Cover-2-1.png?rlkey=qg85mhtajp2o1468e1r24ckq8&raw=1" alt="QR Code">
+    </div>
+
+    <script>
+        var musicStarted = false; // Variável para controlar se a música já começou a tocar
+
+        // Função para verificar a resposta
+        function verificar() {
+            var resposta = document.getElementById("resposta").value;
+            if (resposta.toLowerCase() === "que vista bonita") {
+                document.getElementById("resultado").innerHTML = "Ebaaa, você acertou!!!";
+                document.getElementById("resultado").style.color = "#4CAF50"; /* Cor verde para correto */
+                document.getElementById("qrCode").style.display = "block"; // Mostra o QR code
+            } else {
+                document.getElementById("resultado").innerHTML = "Errouuu. Tente novamente.";
+                document.getElementById("resultado").style.color = "#f44336"; /* Cor vermelha para incorreto */
+                document.getElementById("qrCode").style.display = "none"; // Oculta o QR code se errar
+            }
+        }
+
+        // Função para fazer o fade-in da música
+        function fadeInMusic() {
+            if (!musicStarted) { // Verifica se a música já começou
+                var music = document.getElementById("backgroundMusic");
+                music.volume = 0.1; // Começa com volume 10%
+                music.play(); // Toca a música
+
+                var fadeInInterval = setInterval(function() {
+                    if (music.volume < 1) {
+                        music.volume += 0.1; // Aumenta o volume
+                    } else {
+                        clearInterval(fadeInInterval); // Para o intervalo quando o volume atingir 1
+                    }
+                }, 500); // Aumenta a cada 500 ms
+
+                musicStarted = true; // Marca que a música começou
+            }
+        }
+    </script>
+</body>
+</html>
